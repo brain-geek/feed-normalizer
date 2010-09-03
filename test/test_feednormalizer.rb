@@ -180,6 +180,13 @@ class FeedNormalizerTest < Test::Unit::TestCase
     feed = FeedNormalizer::FeedNormalizer.parse(XML_FILES[:rss20], :force_parser => Fn::SimpleRssParser, :try_others => false)
     assert_equal [['Click'],['Technology'],[]], feed.items.collect {|i|i.categories}
   end
+  
+  def test_as_array
+    feed = FeedNormalizer::FeedNormalizer.parse(XML_FILES[:rss20], :force_parser => Fn::SimpleRssParser, :try_others => false)
+    assert_nothing_raised {
+      assert_kind_of String, feed.items.first.to_a['content']
+    }
+  end
 
   def test_loose_categories_ruby_rss
     feed = FeedNormalizer::FeedNormalizer.parse(XML_FILES[:rss20], :force_parser => Fn::RubyRssParser, :try_others => false, :loose => true)

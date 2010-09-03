@@ -187,6 +187,17 @@ module FeedNormalizer
     def content
       @content = rewrite_relative_links(@content, url)
     end
+    
+    undef to_a
+    def to_a
+      res = {}
+      
+      ELEMENTS.each { |id|
+          res[id.to_s] = self.send id
+        }
+              
+      res
+    end
 
   end
 
@@ -242,4 +253,3 @@ module FeedNormalizer
   end
 
 end
-
